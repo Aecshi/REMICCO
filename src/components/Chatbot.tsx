@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageCircle, X, Bot, User, Minimize2, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -176,6 +176,21 @@ export function Chatbot() {
     scrollToBottom();
   }, [messages]);
 
+  const toggleMinimize = useCallback(() => {
+    console.log('Toggle minimize - current state:', isMinimized);
+    setIsMinimized(prev => !prev);
+  }, [isMinimized]);
+
+  const closeChat = useCallback(() => {
+    console.log('Close chat');
+    setIsOpen(false);
+  }, []);
+
+  const openChat = useCallback(() => {
+    console.log('Open chat');
+    setIsOpen(true);
+  }, []);
+
   const handleSendMessage = (text: string) => {
     if (!text.trim()) return;
 
@@ -233,7 +248,8 @@ export function Chatbot() {
   if (!isOpen) {
     return (
       <button
-        onClick={() => setIsOpen(true)}
+        type="button"
+        onClick={openChat}
         className="fixed bottom-6 right-6 z-[9999] w-16 h-16 bg-gradient-to-br from-primary to-secondary text-white rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 flex items-center justify-center group pointer-events-auto"
         aria-label="Open chat assistant"
       >
@@ -248,12 +264,12 @@ export function Chatbot() {
   return (
     <div
       className={cn(
-        "fixed bottom-6 right-6 z-[9999] bg-card border-2 border-primary/20 rounded-3xl shadow-2xl transition-all duration-300 overflow-hidden pointer-events-auto",
+        "fixed bottom-6 right-6 z-[9999] bg-card border-2 border-primary/20 rounded-3xl shadow-2xl transition-all duration-300 overflow-hidden pointer-events-auto flex flex-col",
         isMinimized ? "w-80 h-16" : "w-[400px] h-[600px] max-h-[80vh]"
       )}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-gradient-to-r from-primary to-secondary text-white">
+      {/* Header - Always Visible */}
+      <div className="flex-shrink-0 flex items-center justify-between p-4 bg-gradient-to-r from-primary to-secondary text-white relative z-50">
         <div className="flex items-center gap-3">
           <div className="w-11 h-11 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center shadow-inner">
             <Bot className="w-6 h-6" />
@@ -266,30 +282,30 @@ export function Chatbot() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9 text-white hover:bg-white/20 pointer-events-auto rounded-full"
-            onClick={() => setIsMinimized(!isMinimized)}
+        <div className="flex items-center gap-1 relative z-50">
+          <button
+            type="button"
+            className="h-9 w-9 text-white hover:bg-white/20 rounded-full transition-colors flex items-center justify-center cursor-pointer"
+            onClick={toggleMinimize}
+            aria-label="Minimize chat"
           >
             <Minimize2 className="w-5 h-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9 text-white hover:bg-white/20 pointer-events-auto rounded-full"
-            onClick={() => setIsOpen(false)}
+          </button>
+          <button
+            type="button"
+            className="h-9 w-9 text-white hover:bg-white/20 rounded-full transition-colors flex items-center justify-center cursor-pointer"
+            onClick={closeChat}
+            aria-label="Close chat"
           >
             <X className="w-5 h-5" />
-          </Button>
+          </button>
         </div>
       </div>
 
       {!isMinimized && (
         <>
           {/* Messages */}
-          <div className="flex-1 h-[400px] overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-muted/20 to-background">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-muted/20 to-background">
             {messages.map((message) => (
               <div
                 key={message.id}
@@ -340,7 +356,7 @@ export function Chatbot() {
           </div>
 
           {/* Quick Questions by Category - Always Visible */}
-          <div className="px-4 py-3 border-t-2 border-primary/10 bg-card/50 backdrop-blur-sm max-h-64 overflow-y-auto">
+          <div className="flex-shrink-0 px-4 py-3 border-t-2 border-primary/10 bg-card/50 backdrop-blur-sm max-h-64 overflow-y-auto">
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs font-semibold text-primary flex items-center gap-2">
                 <HelpCircle className="w-4 h-4" />
@@ -348,9 +364,14 @@ export function Chatbot() {
               </p>
               {messages.length > 1 && (
                 <Button
+                  type="button"
                   size="sm"
                   variant="ghost"
-                  onClick={resetChat}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    resetChat();
+                  }}
                   className="text-xs h-7 px-2 text-muted-foreground hover:text-primary pointer-events-auto"
                 >
                   Reset Chat
@@ -365,7 +386,12 @@ export function Chatbot() {
                     {category.questions.map((q) => (
                       <button
                         key={q}
-                        onClick={() => handleSendMessage(q)}
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          handleSendMessage(q);
+                        }}
                         className="text-xs px-3 py-1.5 bg-primary/10 hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-200 cursor-pointer pointer-events-auto border border-primary/20 hover:scale-105"
                         disabled={isTyping}
                       >

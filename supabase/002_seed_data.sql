@@ -16,17 +16,18 @@ TRUNCATE TABLE news_articles RESTART IDENTITY CASCADE;
 TRUNCATE TABLE events RESTART IDENTITY CASCADE;
 TRUNCATE TABLE gallery_images RESTART IDENTITY CASCADE;
 TRUNCATE TABLE contact_info RESTART IDENTITY CASCADE;
+TRUNCATE TABLE site_settings RESTART IDENTITY CASCADE;
 
 -- ============================================
 -- HERO CONTENT
 -- ============================================
 INSERT INTO hero_content (tagline, heading, heading_highlight, description, primary_button_text, primary_button_link, secondary_button_text, secondary_button_link)
 VALUES (
-  'Est. 2018 • Mindoro, Philippines',
+  'Est. 2018 • Oriental Mindoro, Philippines',
   'Empowering Mindoreños Through',
-  'Faith-Guided',
-  'The Responsible and Empowered Mindoreños Credit Cooperative — where trust, solidarity, and shared belief transform limited resources into meaningful opportunities.',
-  'Join Our Community',
+  'Faith & Cooperation',
+  'The Responsible and Empowered Mindoreños Credit Cooperative — aspiring to be a leading financial cooperative in Oriental Mindoro, contributing to the progress and empowerment of our members while remaining socially responsible to the community.',
+  'Become a Member',
   '#contact',
   'Learn More',
   '#about'
@@ -67,29 +68,33 @@ INSERT INTO about_content (
   'Rooted in Faith, Built by the People',
   'Our Story',
   ARRAY[
-    '<strong>REMICCO</strong> was organized in 2018 in response to the growing socio-economic challenges faced by working families in Oriental and Occidental Mindoro. From the outset, it was envisioned not merely as a financial institution but as a <strong>people-centered cooperative rooted in service and solidarity</strong>.',
-    'During a pre-registration seminar on 3 February 2018, <strong>79 founding members</strong> committed their trust and resources, raising an initial capitalization of <strong>₱711,000</strong>. The cooperative was officially registered with the Cooperative Development Authority (CDA) on 25 April 2018.'
+    'The <strong>Responsible and Empowered Mindoreños Credit Cooperative (REMICCO)</strong> was organized in 2018 through the initiative of <strong>Fr. Jimson H. Ruga</strong>, Chairman of the Board of Saklaw Foundation, Inc., a Microfinance NGO in Oriental Mindoro. Through his persistence, he convinced the Board of Trustees to organize a cooperative for the employees of the institution.',
+    'The Board of Trustees and employees voluntarily contributed to the paid-up capital stock, raising <strong>₱711,000.00</strong> as starting capital. On <strong>February 3, 2018</strong>, a Pre-Registration Seminar was held at St. Augustine Seminary, attended by <strong>79 participants</strong> who elected interim officers to start the cooperative.',
+    'Elected to the Board of Directors were Fr. Jimson H. Ruga, Beverlie C. Panganiban, Marjorie R. Mendoza (CPA), Dr. Iluminada M. Martin, and Nestor C. Salvacion. On <strong>March 5, 2018</strong>, the officers submitted all requirements for registration, and on <strong>April 25, 2018</strong>, the Cooperative Development Authority (CDA) officially approved REMICCO under Registration No. 9520-104000000004304.',
+    'Ms. Lilia Buela extended technical assistance as part of CDA''s mobilization program, strengthening members'' and officers'' knowledge on cooperativism. CDA issued a Certificate of Compliance on April 30, 2018, and REMICCO was subsequently registered with the BIR on May 24, 2018.'
   ],
-  'For many of us, joining REMICCO was an act of faith. We believed that by helping one another save and grow, we could free ourselves from debt traps and uncertainty.',
-  'A Founding Member',
-  'Source: Virola, Madonna T. "REMICCO: A Ministry of Hope." Radio Veritas Asia, 23 January 2026.',
-  'https://rvasia.org',
+  'The ultimate goal of REMICCO is to help enrich the quality of life of Mindoreños through excellent and caring services embedded on Christian values.',
+  'REMICCO Operating Policies Manual',
+  'CDA Registered: April 25, 2018 • Registration No. 9520-104000000004304',
+  NULL,
   'Our Vision',
-  'To become a leading financial cooperative in Oriental Mindoro while remaining socially responsible to the wider community — where finance, rooted in faith and solidarity, becomes a ministry of hope.',
+  'REMICCO aspires to be a leading financial cooperative in Oriental Mindoro contributing to the progress and empowerment of our members and socially responsible to the community.',
   'Our Mission',
-  'To integrate financial services with personal and spiritual formation — forming responsible stewards who understand that financial growth must always go hand in hand with integrity, accountability, and concern for others.'
+  'Inspired by Christian values, REMICCO commits to provide innovative financial and personal development that will undertake socio-economic activities relevant to the members'' felt need in an efficient, friendly and professional manner.'
 );
 
 -- ============================================
 -- HIGHLIGHTS
 -- ============================================
 INSERT INTO highlights (text, order_index, is_active) VALUES
-  ('79 founding members in 2018', 1, true),
-  ('CDA registered since April 25, 2018', 2, true),
-  ('Most Outstanding Cooperative (MIMAROPA 2023)', 3, true),
-  ('1st Runner-Up CDA National Gawad Parangal', 4, true),
-  ('Guided by the 5Cs of Credit', 5, true),
-  ('Inspired by St. Mark the Evangelist', 6, true);
+  ('79 founding members since February 2018', 1, true),
+  ('CDA registered — April 25, 2018', 2, true),
+  ('₱711,000 starting paid-up capital', 3, true),
+  ('Guided by the 5Cs of Credit', 4, true),
+  ('Most Outstanding Cooperative (MIMAROPA 2023)', 5, true),
+  ('1st Runner-Up — CDA National Gawad Parangal', 6, true),
+  ('Core Values: Excellence, Good Governance, Discipline, Competence', 7, true),
+  ('Open to residents of Oriental & Occidental Mindoro', 8, true);
 
 -- ============================================
 -- AWARDS
@@ -102,94 +107,100 @@ INSERT INTO awards (year, title, order_index, is_active) VALUES
 -- ============================================
 -- SERVICES
 -- ============================================
-INSERT INTO services (icon, title, description, full_description, features, requirements, terms, interest_rate, loan_amount_range, payment_terms, contact_info, order_index, is_active) VALUES
+INSERT INTO services (icon, title, description, image_url, full_description, features, requirements, terms, interest_rate, loan_amount_range, payment_terms, contact_info, order_index, is_active) VALUES
   (
     'Wallet', 
-    'Regular Loans', 
-    'Affordable personal loans with flexible repayment terms designed for working families.',
-    'Our Regular Loan program provides accessible financing for your personal needs. Whether it''s for home improvement, medical expenses, or family occasions, we''re here to support you with competitive rates and flexible terms that fit your budget.',
-    '["Quick approval process (3-5 business days)", "Flexible payment terms up to 36 months", "No prepayment penalties", "Grace period options available", "Automatic salary deduction available"]',
-    '["Active REMICCO membership for at least 3 months", "Valid government-issued ID", "Proof of income (payslip, ITR, or business permit)", "2 co-makers who are also REMICCO members", "Proof of residence"]',
-    'Loan amount is based on your share capital and payment capacity. Interest is computed monthly on the diminishing balance.',
-    '1.5% - 2% per month',
-    '₱5,000 - ₱200,000',
-    '6, 12, 18, 24, or 36 months',
-    'Visit our main office in Victoria or call during business hours for loan counseling and application.',
+    'Regular Loan', 
+    'A non-income generating loan providing financial relief to members and their families.',
+    'https://images.unsplash.com/photo-1554224311-beee4ece8c35?w=800&auto=format&fit=crop',
+    'The Regular Loan program is designed to provide financial relief to REMICCO members and their families. Whether for home improvement, medical expenses, or family occasions, this loan offers competitive rates based on the 5Cs of Credit: Character, Capacity, Capital, Collateral, and Conditions.',
+    '["Loanable amount: 200% of paid-up capital", "Aggregate up to 300% for members in good standing", "1% diminishing interest per month", "2% service charge (pre-deducted upon release)", "Automatic salary deduction available", "Aggregate loan shall not exceed ₱300,000"]',
+    '["Member in good standing (current on capital shares and loan amortizations)", "Monthly amortization not more than 60% of net take-home pay", "No pending retirement or resignation within loan term", "Duly accomplished loan application form", "Salary Deduction Agreement (for members outside SFI)", "Copy of pay slip for last 2 consecutive months (for members outside SFI)"]',
+    'Interest is computed at 1% diminishing per month. A 2% service charge is pre-deducted upon release. A penalty of 2% per month is imposed on arrearages. Loan renewal allowed after payment of at least 50% of the amortization schedule.',
+    '1% diminishing per month',
+    'Up to 200% of paid-up capital (max ₱300,000 aggregate)',
+    '6, 12, 24, or 36 months',
+    'Submit your loan application to any member of the Credit Committee at the REMICCO office.',
     1,
     true
   ),
   (
-    'PiggyBank', 
-    'Savings Programs', 
-    'Secure savings accounts with competitive interest rates to help you build for the future.',
-    'Build your financial security with our comprehensive savings programs. From regular savings to time deposits, we offer various options to help you grow your money safely while earning competitive returns.',
-    '["PDIC insured up to ₱100,000", "Competitive interest rates", "No maintaining balance for regular savings", "Withdrawable anytime during office hours", "Quarterly interest crediting", "Online balance inquiry"]',
-    '["REMICCO membership", "Valid government-issued ID", "Initial deposit of ₱100 for regular savings", "Filled-out account opening form"]',
-    'Regular savings earn 2% annual interest. Time deposits earn higher rates (3-5%) depending on term. Voluntary shares earn annual dividends.',
-    '2% - 5% per annum',
-    'Minimum ₱100 initial deposit',
-    'Regular savings: Anytime withdrawal. Time deposits: 3, 6, or 12 months',
-    'Open your account at our main office. Bring valid ID and initial deposit.',
+    'Building', 
+    'Other Loan', 
+    'A loan for family needs such as educational expenses and other essential purposes.',
+    'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&auto=format&fit=crop',
+    'The Other Loan type may be availed by members for various family needs, including educational expenses for children and other essential family purposes. This complements the Regular Loan to ensure members have access to funds for life''s important needs.',
+    '["Loanable amount: 100% of paid-up capital", "1% diminishing interest per month", "2% service charge (pre-deducted upon release)", "Can be availed alongside Regular Loan (up to aggregate limit)", "Renewal after payment of at least 30% of Other Loan"]',
+    '["Member in good standing", "Monthly amortization not more than 60% of net take-home pay", "Duly accomplished loan application form", "Salary Deduction Agreement (for members outside SFI)", "Copy of pay slip for last 2 consecutive months (for members outside SFI)"]',
+    'Loanable amount is 100% of paid-up capital. Aggregate of all loans shall not exceed ₱300,000. Loan renewal allowed after payment of at least 30% of Other Loan amortization.',
+    '1% diminishing per month',
+    'Up to 100% of paid-up capital',
+    '6, 12, 24, or 36 months',
+    'Submit your loan application to any member of the Credit Committee at the REMICCO office.',
     2,
     true
   ),
   (
-    'Building', 
-    'Livelihood Loans', 
-    'Capital support for small businesses and entrepreneurial ventures in the community.',
-    'Empower your entrepreneurial spirit with our Livelihood Loan program. Designed specifically for small business owners and aspiring entrepreneurs, this program provides the capital you need to start or expand your business venture.',
-    '["Higher loan amounts up to ₱500,000", "Longer payment terms up to 60 months", "Business development support and training", "Flexible collateral options", "Seasonal payment adjustments for agricultural businesses"]',
-    '["REMICCO membership in good standing", "Business plan or proposal", "Business permit or DTI registration", "Proof of business address", "Business financial statements (if existing)", "Collateral (depending on loan amount)"]',
-    'Loan amount based on business viability and collateral. Site inspection may be required. Business training attendance is required for first-time borrowers.',
-    '1.5% - 2% per month',
-    '₱20,000 - ₱500,000',
-    '12, 24, 36, 48, or 60 months',
-    'Schedule a business consultation appointment at our office for loan assessment.',
+    'HeartHandshake', 
+    'Emergency Loan', 
+    'Quick financial assistance for urgent needs — hospitalization, medication, funeral, and maternity expenses.',
+    'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=800&auto=format&fit=crop',
+    'The Emergency Loan is intended for a member''s urgent financial needs such as immediate and continuous medication, hospitalization expenses, funeral expenses due to sudden death of a family member, and maternity expenses. This loan is designed for fast processing to address time-sensitive situations.',
+    '["Loanable amount: 100% of paid-up capital", "1% diminishing interest per month", "2% service charge (pre-deducted upon release)", "Faster processing for urgent situations", "Aggregate loan shall not exceed ₱300,000"]',
+    '["Member in good standing", "Duly accomplished loan application form", "Supporting documents: hospital bill, death certificate, medical records, or maternity records", "Monthly amortization not more than 60% of net take-home pay"]',
+    'Emergency loans are processed with priority. A 2% penalty per month is imposed on arrearages. All share capital and deposits may be applied to payment if the loan becomes past due.',
+    '1% diminishing per month',
+    'Up to 100% of paid-up capital',
+    '6, 12, 24, or 36 months',
+    'For emergencies, visit the REMICCO office immediately with your supporting documents.',
     3,
     true
   ),
   (
-    'GraduationCap', 
-    'Educational Loans', 
-    'Investment in education through accessible study-now-pay-later programs.',
-    'Invest in your family''s future through education. Our Educational Loan program helps members finance tuition fees and other school-related expenses, making quality education accessible to all REMICCO families.',
-    '["Covers tuition and miscellaneous fees", "Direct payment to educational institution", "Flexible payment terms aligned with school calendar", "Available for college, senior high, and vocational courses", "Renewal available for continuing students"]',
-    '["Active REMICCO membership", "Student enrollment proof", "School billing statement", "Student''s report card (for renewals)", "Parent/guardian co-maker"]',
-    'Loan proceeds are paid directly to the school. Payment starts one month after loan release. Interest rates are lower than regular loans.',
-    '1% - 1.5% per month',
-    '₱10,000 - ₱150,000 per semester',
-    '6 or 12 months per semester',
-    'Apply at least 2 weeks before enrollment deadline. Bring enrollment documents.',
+    'PiggyBank', 
+    'Capital Formation', 
+    'Build your financial foundation through share capital investments and savings programs.',
+    'https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=800&auto=format&fit=crop',
+    'Capital formation is a core component of REMICCO''s cooperative structure, enhancing the creditworthiness of members while contributing to the cooperative''s sustainability. As stated in Article VIII, Section 2 of the By-Laws, each member invests to build shared prosperity.',
+    '["Minimum subscription: 4 shares (₱4,000) upon membership", "At least ₱3,000 capital contribution per year", "2% of annual interest on capital and patronage refund reinvested", "2% of each good procured or service acquired from the cooperative", "Capital contributes to your loan eligibility", "Annual dividends on share capital"]',
+    '["REMICCO membership", "Membership fee of ₱300", "Subscribe to at least 4 shares (₱4,000 total)", "Pay at least 1 share (₱1,000) upon approval", "Capital paid on the 15th applied to current month; on the 30th applied to following month"]',
+    'Members who fail to complete the required minimum share capital must re-attend the Pre-Membership Education Seminar (PMES) and pay related fees. Capital builds your cooperative equity and increases loan eligibility.',
+    'Annual dividends distributed at General Assembly',
+    'Minimum ₱1,000 initial share (₱4,000 total subscription)',
+    'Ongoing — annual minimum of ₱3,000',
+    'Visit the REMICCO office to open your membership and begin your capital contributions.',
     4,
     true
   ),
   (
-    'HeartHandshake', 
-    'Emergency Assistance', 
-    'Quick access to funds during emergencies with simplified processing.',
-    'When unexpected emergencies arise, REMICCO is here to help. Our Emergency Assistance program provides quick financial support for urgent medical needs, calamities, and other unforeseen circumstances.',
-    '["Fast approval (same day or next business day)", "Minimal documentation required", "No collateral needed for smaller amounts", "Calamity loan with zero interest available", "Flexible payment terms", "Can be availed even with existing loan"]',
-    '["REMICCO membership", "Valid ID", "Emergency proof (hospital bill, death certificate, etc.)", "1 co-maker for amounts above ₱10,000"]',
-    'For calamity loans in declared disaster areas, special terms apply including possible interest waivers. Maximum loan amount depends on share capital.',
-    '1% - 2% per month (0% for qualified calamity loans)',
-    '₱5,000 - ₱20,000',
-    '3, 6, or 12 months',
-    'For emergencies, visit our office immediately or call our hotline for assistance.',
+    'Users', 
+    'Community Development', 
+    'Extending cooperative principles beyond finance through community outreach programs and activities.',
+    '/assets/gallery/outreach program to Mangyan community.jpg',
+    'Aside from serving its members, REMICCO extends its programs to communities through projects and activities that benefit the areas where the cooperative operates. This reflects the 7th Cooperative Principle — Concern for Community — and REMICCO''s commitment to sustainable development through policies approved by its members.',
+    '["Community outreach programs for indigenous peoples", "Mangyan community support and solar light distribution", "School supplies donation programs", "Tree planting and environmental stewardship", "Bahay Aruga Foundation outreach for the elderly", "Cash assistance to Lingap Center for PDL", "Classroom donation projects in rural areas"]',
+    '["Active REMICCO membership to participate", "Programs approved by the General Assembly"]',
+    'Community development programs are funded through cooperative activities and approved by the General Assembly in accordance with Cooperative Principle No. 7: Concern for Community.',
+    'Not applicable',
+    'Not applicable',
+    'Ongoing programs throughout the year',
+    'Contact the REMICCO office to learn about upcoming community activities and how you can participate.',
     5,
     true
   ),
   (
-    'Users', 
-    'Member Benefits', 
-    'Exclusive benefits including insurance coverage, dividends, and community programs.',
-    'Being a REMICCO member means more than just access to financial services. Enjoy a comprehensive package of benefits designed to support your family''s welfare and build a stronger community together.',
-    '["Annual dividends on share capital", "Patronage refunds based on transactions", "Life insurance coverage", "Educational scholarships for dependents", "Medical assistance program", "Livelihood training and seminars", "Annual general assembly with raffle prizes", "Discounts from partner merchants"]',
-    '["Active REMICCO membership", "Good standing (no delinquent loans)", "Minimum share capital maintained", "Updated member information"]',
-    'Dividends and patronage refunds are distributed annually during the Annual General Assembly. Insurance coverage is automatic for all members in good standing.',
+    'GraduationCap', 
+    'Capacity Building', 
+    'Training and seminars for officers, management, and members to strengthen cooperative knowledge.',
+    '/assets/gallery/management and officers seminars.jpg',
+    'Pursuant to Article 44 of RA 9520 and its Implementing Rules, REMICCO ensures that its officers and members receive relevant training and education. This builds institutional strength and develops skilled cooperative leaders who can contribute effectively to the cooperative''s growth.',
+    '["Mandatory training for cooperative officers (per CDA requirements)", "Pre-Membership Education Seminar (PMES) for all new members", "Management and officers seminars", "Financial literacy workshops", "Cooperative governance training", "Regular capacity-building programs aligned with CDA MC No. 2015-009"]',
+    '["Active REMICCO membership", "Officers must attend CDA-required training programs", "New members must complete PMES before membership approval"]',
+    'Officers are required to attend relevant trainings as mandated by CDA. New members must personally attend the Pre-Membership Education Seminar (attendance by proxy is not allowed).',
     'Not applicable',
     'Not applicable',
-    'Benefits effective upon membership approval',
-    'Visit our office for complete member benefits information and scholarship application.',
+    'As scheduled per CDA requirements and cooperative calendar',
+    'Check with the REMICCO office for the schedule of upcoming training programs and seminars.',
     6,
     true
   );
@@ -290,5 +301,37 @@ INSERT INTO contact_info (address, phone, email, office_hours, facebook_url) VAL
     '+63 123 456 789',
     'info@remicco.org',
     ARRAY['Mon - Fri: 8:00 AM - 5:00 PM', 'Sat: 8:00 AM - 12:00 PM'],
-    'https://facebook.com/remicco'
+    'https://www.facebook.com/profile.php?id=100056874107356'
   );
+
+-- ============================================
+-- SITE SETTINGS (About Page Extended Content)
+-- ============================================
+
+-- Goal and REMICCO Acronym
+INSERT INTO site_settings (key, value) VALUES
+  ('about_goal', '{"text": "The ultimate goal of REMICCO is to help enrich the quality of life of Mindoreños through an excellent and caring services embedded on Christian values.", "acronym": [{"letter": "R", "meaning": "Respond to the need of members"}, {"letter": "E", "meaning": "Enhance competence, professionalism and spirituality among officers, management and staff"}, {"letter": "M", "meaning": "Manage economic viability of cooperative"}, {"letter": "I", "meaning": "Installation, operation and maintenance of other social services identified and approved by the general assembly"}, {"letter": "C", "meaning": "Conform to the globally accepted performance standard"}, {"letter": "C", "meaning": "Conduct any related activity geared towards the member''s self-governance and sufficiency to improve their socio-economic well-being"}, {"letter": "O", "meaning": "Observe good governance"}]}'::jsonb);
+
+-- Core Values
+INSERT INTO site_settings (key, value) VALUES
+  ('about_core_values', '["Excellent and caring service", "Good governance", "Discipline", "Competence"]'::jsonb);
+
+-- Cooperative Principles
+INSERT INTO site_settings (key, value) VALUES
+  ('about_cooperative_principles', '[{"number": 1, "title": "Voluntary and Open Membership", "description": "Cooperatives are voluntary organizations, open to all persons able to use their services and willing to accept the responsibilities of membership, without gender, social, racial, cultural, political or religious discrimination."}, {"number": 2, "title": "Democratic Member Control", "description": "Cooperatives are democratic organizations that are controlled by their members who actively participate in setting their policies and making decisions. Men and women serving as elected representatives, directors or officers are accountable to the membership. In primary cooperatives, members have equal voting rights of one-member, one-vote."}, {"number": 3, "title": "Member Economic Participation", "description": "Members contribute equitably to, and democratically control, the capital of their cooperatives. At least part of the capital is the common property of the cooperative. Members allocated surpluses for developing the cooperative by setting up reserves, benefitting members in proportion to their patronage, and supporting other activities approved by the membership."}, {"number": 4, "title": "Autonomy and Independence", "description": "Cooperatives are autonomous, self-help organizations controlled by their members. If they enter into agreements with other organizations, including government, or raise capital from external sources, they shall do so on terms that ensure democratic control of their members and maintain their cooperative autonomy."}, {"number": 5, "title": "Education, Training and Information", "description": "Cooperatives shall provide education and training for their members, elected and appointed representatives, managers and employees, so that they can contribute effectively and efficiently to the development of their cooperatives."}, {"number": 6, "title": "Cooperation Among Cooperatives", "description": "Cooperatives serve their members most effectively and strengthen the cooperative movement by working together through local, national, regional and international structures."}, {"number": 7, "title": "Concern for Community", "description": "Cooperatives work for the sustainable development of their communities through policies approved by their members."}]'::jsonb);
+
+-- Organizational Structure
+INSERT INTO site_settings (key, value) VALUES
+  ('about_org_structure', '{"description": "The highest governing and policy-making body of the cooperative is the General Assembly. Currently, REMICCO has five (5) Board of Directors and 18 committee officers.", "bodies": ["General Assembly", "Board of Directors", "Audit Committee", "Election Committee", "Mediation and Conciliation Committee", "Credit Committee", "GAD Committees", "Education & Training Committee", "Ethics Committee", "Other Committees", "Management Staff", "Secretary", "Treasurer"]}'::jsonb);
+
+-- Founding Leadership
+INSERT INTO site_settings (key, value) VALUES
+  ('about_leadership', '{"board_of_directors": ["Fr. Jimson H. Ruga", "Beverlie C. Panganiban", "Marjorie R. Mendoza, CPA", "Dr. Iluminada M. Martin", "Nestor C. Salvacion"], "officers": [{"name": "Fr. Jimson H. Ruga", "position": "Chairman of the Board"}, {"name": "Dionisia C. Adalia", "position": "Treasurer"}, {"name": "Lourdes L. Alarde", "position": "Secretary"}, {"name": "Frederick R. Villanueva", "position": "Manager"}]}'::jsonb);
+
+-- Membership Criteria
+INSERT INTO site_settings (key, value) VALUES
+  ('about_membership', '{"eligibility": "Membership is open to all residents of the Province of Oriental and Occidental Mindoro who are private and government employees and have personally completed the required Pre-Membership Education Seminar (PMES).", "requirements": ["Application for membership shall be made in writing with recent 1x1 ID picture, one (1) government issued ID and/or one (1) company ID.", "Applicants shall undergo a Pre-Membership Education Seminar (PMES). Attendance by proxy is not allowed.", "A membership fee of ₱300 shall be collected upon submission of membership application.", "Applicants shall subscribe to at least four (4) shares with a total value of ₱4,000.00 and pay at least one (1) share or ₱1,000.00.", "Capital contribution paid on the 15th of the month is applied as paid-up capital for the current month. Payment on the 30th is applied the following month.", "Pledge to undertake the responsibilities of members and uphold the by-laws, policies, guidelines, rules and regulations.", "Use or anticipate using the services of the cooperative."], "termination": {"special_circumstances": "Death, insanity, permanent incapacity, or judicial declaration of insolvency. In case of death or insanity, the next-of-kin may assume duties and responsibilities.", "voluntary": "A member may withdraw by giving sixty (60) days notice to the Board of Directors.", "involuntary": "A member may be terminated by majority vote of the Board for failure to patronize services, comply with obligations, violating by-laws, or acts prejudicial to the cooperative."}}'::jsonb);
+
+-- Spirituality
+INSERT INTO site_settings (key, value) VALUES
+  ('about_spirituality', '{"patron_saint": "The Patron Saint of REMICCO is Saint Mark the Evangelist. The symbol of St. Mark is a Winged Lion.", "symbol": "Winged Lion", "symbol_meaning": "The Lion with wings symbolizes courage, strength, and freedom. It is a representation of the power of the soul and its ability to break away from earthly confines to soar through the heavens.", "aspects": [{"name": "Courage", "description": "A lion with wings symbolizes the strength of character and courage to overcome fear and stand up for one'\''s convictions."}, {"name": "Strength", "description": "It personifies the inner strength necessary to push through insurmountable obstacles and remain unbowed in the face of adversity."}, {"name": "Freedom", "description": "A lion with wings symbolizes the freedom of the spirit, allowing it to move freely and explore uncharted paths."}, {"name": "Power", "description": "It expresses the powerful energy of the soul, which is capable of achieving great things."}]}'::jsonb);

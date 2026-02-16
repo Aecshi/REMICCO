@@ -31,6 +31,7 @@ const BentoCard = ({
   description,
   href,
   cta,
+  imageUrl,
 }: {
   name: string;
   className?: string;
@@ -39,6 +40,7 @@ const BentoCard = ({
   description: string;
   href?: string;
   cta?: string;
+  imageUrl?: string;
 }) => (
   <div
     key={name}
@@ -51,6 +53,16 @@ const BentoCard = ({
       className,
     )}
   >
+    {imageUrl && (
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={imageUrl} 
+          alt={name}
+          className="h-full w-full object-cover opacity-20 transition-all duration-500 group-hover:opacity-30 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent dark:from-black dark:via-black/80" />
+      </div>
+    )}
     <div>{background}</div>
     <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6 transition-all duration-300 group-hover:-translate-y-10">
       <Icon className="h-12 w-12 origin-left transform-gpu text-neutral-700 transition-all duration-300 ease-in-out group-hover:scale-75 dark:text-neutral-300" />

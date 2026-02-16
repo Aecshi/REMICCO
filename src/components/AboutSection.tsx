@@ -4,10 +4,15 @@ import { useScrollAnimation } from '@/hooks/useScrollEffects';
 import { cn } from '@/lib/utils';
 
 export function AboutSection() {
-  const { data: aboutContent, isLoading: contentLoading } = useAboutContent();
-  const { data: highlights, isLoading: highlightsLoading } = useHighlights();
-  const { data: awards, isLoading: awardsLoading } = useAwards();
+  const { data: aboutContent, isLoading: contentLoading, error: contentError } = useAboutContent();
+  const { data: highlights, isLoading: highlightsLoading, error: highlightsError } = useHighlights();
+  const { data: awards, isLoading: awardsLoading, error: awardsError } = useAwards();
   const { ref: sectionRef, isVisible } = useScrollAnimation();
+
+  // Log errors for debugging
+  if (contentError) console.error('About content error:', contentError);
+  if (highlightsError) console.error('Highlights error:', highlightsError);
+  if (awardsError) console.error('Awards error:', awardsError);
 
   const isLoading = contentLoading || highlightsLoading || awardsLoading;
 
@@ -29,29 +34,22 @@ export function AboutSection() {
             isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
           )}>
             <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium mb-4">
-              {aboutContent?.section_tag || 'Rooted in Faith, Built by the People'}
+              {aboutContent?.section_tag}
             </span>
             
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6" style={{ fontWeight: 600, letterSpacing: '-0.02em' }}>
-              {aboutContent?.section_title || 'Our Story'}
+              {aboutContent?.section_title}
             </h2>
             
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               {aboutContent?.paragraphs?.map((paragraph, index) => (
                 <p key={index} dangerouslySetInnerHTML={{ __html: paragraph }} />
-              )) || (
-                <>
-                  <p>
-                    <strong className="text-foreground">REMICCO</strong> was organized in 2018 in response to the growing 
-                    socio-economic challenges faced by working families in Oriental and Occidental Mindoro.
-                  </p>
-                </>
-              )}
+              ))}
               
               <blockquote className="border-l-4 border-secondary pl-4 py-2 italic bg-accent/30 rounded-r-lg">
                 <Quote className="w-5 h-5 text-secondary mb-2" />
-                "{aboutContent?.quote_text || 'For many of us, joining REMICCO was an act of faith.'}"
-                <footer className="text-sm mt-2 text-foreground not-italic">— {aboutContent?.quote_author || 'A Founding Member'}</footer>
+                "{aboutContent?.quote_text}"
+                <footer className="text-sm mt-2 text-foreground not-italic">— {aboutContent?.quote_author}</footer>
               </blockquote>
             </div>
 
@@ -85,16 +83,16 @@ export function AboutSection() {
             isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
           )}>
             <div className="bg-primary text-primary-foreground rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <h3 className="text-2xl font-bold mb-4" style={{ fontWeight: 600 }}>{aboutContent?.vision_title || 'Our Vision'}</h3>
+              <h3 className="text-2xl font-bold mb-4" style={{ fontWeight: 600 }}>{aboutContent?.vision_title}</h3>
               <p className="leading-relaxed opacity-90">
-                {aboutContent?.vision_text || 'To become a leading financial cooperative in Oriental Mindoro while remaining socially responsible to the wider community.'}
+                {aboutContent?.vision_text}
               </p>
             </div>
             
             <div className="bg-secondary text-secondary-foreground rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-              <h3 className="text-2xl font-bold mb-4" style={{ fontWeight: 600 }}>{aboutContent?.mission_title || 'Our Mission'}</h3>
+              <h3 className="text-2xl font-bold mb-4" style={{ fontWeight: 600 }}>{aboutContent?.mission_title}</h3>
               <p className="leading-relaxed">
-                {aboutContent?.mission_text || 'To integrate financial services with personal and spiritual formation.'}
+                {aboutContent?.mission_text}
               </p>
             </div>
 

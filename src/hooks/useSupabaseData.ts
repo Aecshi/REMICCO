@@ -12,6 +12,7 @@ import type {
   Event,
   GalleryImage,
   ContactInfo,
+  SiteSetting,
 } from '@/types/database';
 
 // ============================================
@@ -283,6 +284,47 @@ export function useContactInfo() {
 
       if (error) throw error;
       return data as ContactInfo;
+    },
+  });
+}
+
+// ============================================
+// SITE SETTINGS HOOKS
+// ============================================
+
+export function useSiteSetting<T = unknown>(key: string) {
+  return useQuery({
+    queryKey: ['siteSetting', key],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('*')
+        .eq('key', key)
+        .limit(1)
+        .single();
+
+      if (error) throw error;
+      return (data as SiteSetting).value as T;
+    },
+  });
+}
+
+export function useSiteSettings(keys: string[]) {
+  return useQuery({
+    queryKey: ['siteSettings', keys],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('*')
+        .in('key', keys);
+
+      if (error) throw error;
+      
+      const settings: Record<string, unknown> = {};
+      (data as SiteSetting[]).forEach((item) => {
+        settings[item.key] = item.value;
+      });
+      return settings;
     },
   });
 }

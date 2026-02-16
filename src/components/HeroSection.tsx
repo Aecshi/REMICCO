@@ -31,9 +31,14 @@ export function HeroSection() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const { ref: parallaxRef, offset } = useParallax(0.5);
   
-  const { data: heroSlides, isLoading: slidesLoading } = useHeroSlides();
-  const { data: heroContent, isLoading: contentLoading } = useHeroContent();
-  const { data: stats, isLoading: statsLoading } = useStats();
+  const { data: heroSlides, isLoading: slidesLoading, error: slidesError } = useHeroSlides();
+  const { data: heroContent, isLoading: contentLoading, error: contentError } = useHeroContent();
+  const { data: stats, isLoading: statsLoading, error: statsError } = useStats();
+
+  // Log errors for debugging
+  if (slidesError) console.error('Hero slides error:', slidesError);
+  if (contentError) console.error('Hero content error:', contentError);
+  if (statsError) console.error('Stats error:', statsError);
 
   const slides = heroSlides || [];
   
@@ -134,16 +139,16 @@ export function HeroSection() {
       <div className="relative container py-20 lg:py-32">
         <div className="max-w-3xl">
           <span className="inline-block px-4 py-2 bg-secondary/20 text-secondary rounded-full text-sm font-medium mb-6 animate-fade-in-up">
-            {heroContent?.tagline || 'Est. 2018 • Mindoro, Philippines'}
+            {heroContent?.tagline}
           </span>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 leading-tight animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            {heroContent?.heading || 'Empowering Mindoreños Through'}{' '}
-            <span className="text-secondary">{heroContent?.heading_highlight || 'Faith-Guided'}</span> Finance
+            {heroContent?.heading}{' '}
+            <span className="text-secondary">{heroContent?.heading_highlight}</span>
           </h1>
           
           <p className="text-lg md:text-xl text-primary-foreground/90 mb-8 leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-            {heroContent?.description || 'The Responsible and Empowered Mindoreños Credit Cooperative — where trust, solidarity, and shared belief transform limited resources into meaningful opportunities.'}
+            {heroContent?.description}
           </p>
 
           {/* Stats */}

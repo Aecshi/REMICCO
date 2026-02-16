@@ -5,23 +5,23 @@ import { Input } from '@/components/ui/input';
 import { useContactInfo } from '@/hooks/useSupabaseData';
 
 const footerLinks = [
-  { label: 'About Us', href: '/#about' },
+  { label: 'About Us', href: '/about', isRoute: true },
   { label: 'Programs & Services', href: '/services', isRoute: true },
   { label: 'News & Events', href: '/news', isRoute: true },
   { label: 'Gallery', href: '/gallery', isRoute: true },
-  { label: 'Contact Us', href: '/#contact' },
+  { label: 'Contact Us', href: '/contact', isRoute: true },
 ];
 
 export function Footer() {
-  const { data: contact, isLoading } = useContactInfo();
+  const { data: contact, isLoading, error } = useContactInfo();
 
-  // Default values
-  const address = contact?.address || 'Calapan City, Oriental Mindoro, Philippines';
-  const phone = contact?.phone || '+63 123 456 789';
-  const email = contact?.email || 'info@remicco.org';
-  const officeHoursWeekday = contact?.office_hours_weekday || 'Mon - Fri: 8:00 AM - 5:00 PM';
-  const officeHoursSaturday = contact?.office_hours_saturday || 'Sat: 8:00 AM - 12:00 PM';
-  const facebookUrl = contact?.facebook_url || '#';
+  if (error) console.error('Contact info error:', error);
+
+  const address = contact?.address ?? '';
+  const phone = contact?.phone ?? '';
+  const email = contact?.email ?? '';
+  const officeHours = contact?.office_hours ?? [];
+  const facebookUrl = contact?.facebook_url ?? '#';
 
   if (isLoading) {
     return (
@@ -98,8 +98,9 @@ export function Footer() {
               <li className="flex items-start gap-3">
                 <Clock className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
                 <div className="text-primary-foreground/80 text-sm">
-                  <p>{officeHoursWeekday}</p>
-                  <p>{officeHoursSaturday}</p>
+                  {officeHours.map((hours, i) => (
+                    <p key={i}>{hours}</p>
+                  ))}
                 </div>
               </li>
             </ul>

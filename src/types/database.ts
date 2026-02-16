@@ -260,6 +260,7 @@ export interface Database {
           icon: string;
           title: string;
           description: string;
+          image_url: string | null;
           full_description: string | null;
           features: Json;
           requirements: Json;
@@ -278,6 +279,7 @@ export interface Database {
           icon: string;
           title: string;
           description: string;
+          image_url?: string | null;
           full_description?: string | null;
           features?: Json;
           requirements?: Json;
@@ -296,6 +298,7 @@ export interface Database {
           icon?: string;
           title?: string;
           description?: string;
+          image_url?: string | null;
           full_description?: string | null;
           features?: Json;
           requirements?: Json;

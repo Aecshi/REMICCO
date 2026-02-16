@@ -5,11 +5,11 @@ import { Button } from '@/components/ui/button';
 
 const navItems = [
   { label: 'Home', href: '/#home' },
-  { label: 'About Us', href: '/#about' },
+  { label: 'About Us', href: '/about', isRoute: true },
   { label: 'Programs & Services', href: '/services', isRoute: true },
   { label: 'News & Events', href: '/news', isRoute: true },
   { label: 'Gallery', href: '/gallery', isRoute: true },
-  { label: 'Contact Us', href: '/#contact' },
+  { label: 'Contact Us', href: '/contact', isRoute: true },
 ];
 
 export function Header() {

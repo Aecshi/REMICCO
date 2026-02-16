@@ -15,6 +15,23 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Building,
 };
 
+// Import local images
+const galleryImages = import.meta.glob('@/assets/gallery/*.{jpg,jpeg,png}', { eager: true, import: 'default' });
+
+// Helper function to get local image source
+function getImageSrc(imageUrl: string): string {
+  if (imageUrl.startsWith('http')) {
+    return imageUrl;
+  }
+  if (imageUrl.startsWith('/assets/')) {
+    const relativePath = imageUrl.replace('/assets/', '../assets/');
+    const fullPath = `/src/assets/${imageUrl.split('/assets/')[1]}`;
+    const image = galleryImages[fullPath] as string | undefined;
+    return image || imageUrl;
+  }
+  return imageUrl;
+}
+
 // Background gradients for each card
 const backgrounds = [
   <div key="bg1" className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/10" />,
@@ -77,6 +94,7 @@ export function ServicesSection() {
                 name={service.title}
                 description={service.description}
                 Icon={IconComponent}
+                imageUrl={service.image_url ? getImageSrc(service.image_url) : undefined}
                 background={backgrounds[index % backgrounds.length]}
                 className={cn(
                   gridPositions[index % gridPositions.length],

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useContactInfo } from '@/hooks/useSupabaseData';
 
 const navItems = [
   { label: 'Home', href: '/#home' },
@@ -16,6 +17,7 @@ export function Header() {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const { data: contact } = useContactInfo();
 
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm shadow-sm">
@@ -24,12 +26,8 @@ export function Header() {
         <div className="container flex items-center justify-between py-2 text-sm">
           <p className="hidden md:block">Empowering Mindoreños through faith-guided finance</p>
           <div className="flex items-center gap-4 ml-auto">
-            <a href="tel:+63123456789" className="hover:text-secondary transition-colors">
-              +63 123 456 789
-            </a>
-            <span className="hidden sm:inline">|</span>
-            <a href="mailto:info@remicco.org" className="hidden sm:block hover:text-secondary transition-colors">
-              info@remicco.org
+            <a href={`mailto:${contact?.email || 'info@remicco.org'}`} className="hover:text-secondary transition-colors">
+              {contact?.email || 'info@remicco.org'}
             </a>
           </div>
         </div>
